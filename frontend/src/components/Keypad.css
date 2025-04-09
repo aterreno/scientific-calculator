@@ -17,6 +17,13 @@
   margin-bottom: 10px;
 }
 
+.factorial-keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  margin-bottom: 10px;
+}
+
 .memory-keys {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -87,6 +94,15 @@
 }
 
 .scientific-function-keys button:hover {
+  background-color: #3d3d3d;
+}
+
+.factorial-keys button {
+  background-color: #2d2d2d;
+  color: #ff66cc;
+}
+
+.factorial-keys button:hover {
   background-color: #3d3d3d;
 }
 

@@ -152,7 +152,25 @@ const Calculator = () => {
         result = await performApiCalculation(op, inputValue);
         break;
       case 'factorial':
-        result = await performApiCalculation('factorial', { a: Math.round(inputValue) });
+        result = await performApiCalculation('factorial', inputValue);
+        break;
+      case 'permutation':
+      case 'combination':
+        const secondInput = parseFloat(prompt(`Enter r value for ${op}:`));
+        if (isNaN(secondInput)) return;
+        result = await performApiCalculation(op, inputValue, secondInput);
+        break;
+      case 'convert':
+        const fromUnit = prompt('Enter source unit (e.g., celsius, inches, kg):');
+        if (!fromUnit) return;
+        const toUnit = prompt('Enter target unit (e.g., fahrenheit, cm, lb):');
+        if (!toUnit) return;
+        const valueToConvert = inputValue;
+        result = await performApiCalculation('conversion', {
+          from: fromUnit,
+          to: toUnit,
+          value: valueToConvert
+        });
         break;
       default:
         return;
@@ -212,13 +230,19 @@ const Calculator = () => {
         }
         break;
       case 'matrix':
-        alert('Matrix operations not implemented in this UI demo');
+        const matrixOp = prompt('Select matrix operation: add, multiply, determinant, inverse');
+        if (matrixOp) {
+          alert(`Matrix operation ${matrixOp} would be displayed here`);
+        }
         break;
       case 'bitwise':
         const bitwiseOp = prompt('Select bitwise operation: and, or, xor, not, left-shift, right-shift');
         if (bitwiseOp) {
           alert(`Bitwise operation ${bitwiseOp} would be displayed here`);
         }
+        break;
+      case 'conversion':
+        handleSpecialOperation('convert');
         break;
       default:
         break;
@@ -239,7 +263,7 @@ const Calculator = () => {
           <button onClick={() => handleAdvancedOperation('complex')}>Complex Numbers</button>
           <button onClick={() => handleAdvancedOperation('matrix')}>Matrix</button>
           <button onClick={() => handleAdvancedOperation('bitwise')}>Bitwise</button>
-          <button onClick={() => handleSpecialOperation('factorial')}>Factorial</button>
+          <button onClick={() => handleAdvancedOperation('conversion')}>Conversion</button>
         </div>
       )}
       

@@ -14,7 +14,7 @@ services:
       - log-service
       - trig-service
       - memory-service
-      # - factorial-service
+      - factorial-service
       # - conversion-service
       # - matrix-service
       # - bitwise-service

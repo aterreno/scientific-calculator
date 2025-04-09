@@ -5,3 +5,4 @@
 - Upgrade to latest (framework, sdks, images)
 - Perf tests
 - Cloud deploy (ECS)
+- Validation? what if numbers come as strings? Elixir failing atm, more?

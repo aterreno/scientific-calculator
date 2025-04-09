@@ -5,5 +5,5 @@
 - Absolutely insane power in automating writing unit tests, amazing
 - Absolutely insane for automating documentation 
 - Limits on picking up latest versions, but could be fixed perhaps with better prompting
-
+- Spotted a problem with elixir code base; validation on incoming json, if it's a string
 
