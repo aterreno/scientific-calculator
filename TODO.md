@@ -1,8 +1,7 @@
-- Unit Tests
-- Dev Envs https://devenv.sh/getting-started/#1-install-nix
+- Use Dev Envs https://devenv.sh/getting-started/#1-install-nix vs run.sh basic
 - Cybersec
-- CI/CD
+- CI/CD - use github actions
 - Upgrade to latest (framework, sdks, images)
 - Perf tests
 - Cloud deploy (ECS)
-- Validation? what if numbers come as strings? Elixir failing atm, more?
+- JSON/Type Validation? what if numbers come as strings? Elixir failing atm, more?

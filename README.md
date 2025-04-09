@@ -47,7 +47,7 @@ This project implements a scientific calculator with each operation handled by a
 
 ### Square Root Service (F#)
 - Port: 8006
-- Operations: a
+- Operations: √a
 
 ### Logarithm Service (PHP)
 - Port: 8007
