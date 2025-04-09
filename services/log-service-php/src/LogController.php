@@ -54,7 +54,10 @@ class LogController
         
         $result = $logFunction($a);
         
-        error_log("$operationType: $a = $result");
+        // Log message but suppress for testing
+        if (!defined('PHPUNIT_RUNNING')) {
+            error_log("$operationType: $a = $result");
+        }
         
         echo json_encode(['result' => $result]);
     }

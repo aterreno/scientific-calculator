@@ -12,7 +12,7 @@ This project implements a scientific calculator with each operation handled by a
 - Division: Ruby
 - Power: Java
 - Square Root: F#
-- Logarithm: PHP - works
+- Logarithm: PHP
 - Trigonometry: Kotlin - doesn't works
 - Memory Operations: C# - works
 - Combinatorics/Factorial: Elixir - doesn't works

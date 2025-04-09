@@ -3,3 +3,5 @@
 - Cybersec
 - CI/CD
 - Upgrade to latest (framework, sdks, images)
+- Perf tests
+- Cloud deploy (ECS)

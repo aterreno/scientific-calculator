@@ -13,6 +13,9 @@ class LogControllerTest extends TestCase
 
     protected function setUp(): void
     {
+        if (!defined('PHPUNIT_RUNNING')) {
+            define('PHPUNIT_RUNNING', true);
+        }
         $this->controller = new LogController();
     }
 
@@ -21,11 +24,16 @@ class LogControllerTest extends TestCase
      */
     public function testHealth(): void
     {
+        // Start output buffering to capture the output
         ob_start();
         $this->controller->health();
         $output = ob_get_clean();
 
+        // Verify the output
         $this->assertEquals('{"status":"healthy"}', $output);
+        
+        // We'll skip the header assertion since xdebug_get_headers isn't available
+        // and it's not critical for our test functionality
     }
 
     /**
@@ -33,16 +41,16 @@ class LogControllerTest extends TestCase
      */
     public function testNaturalLog(): void
     {
-        $_SERVER['CONTENT_TYPE'] = 'application/json';
-        $_SERVER['HTTP_CONTENT_TYPE'] = 'application/json';
+        // Setup the mock input data
+        $inputData = ['a' => 2.718281828459045]; // e
+        $this->mockInput(json_encode($inputData));
 
-        // Mock the input stream
-        $this->mockInputData(['a' => 2.718281828459045]);
-
+        // Start output buffering to capture the output
         ob_start();
         $this->controller->naturalLog();
         $output = ob_get_clean();
 
+        // Verify the output
         $result = json_decode($output, true);
         $this->assertIsArray($result);
         $this->assertArrayHasKey('result', $result);
@@ -54,37 +62,37 @@ class LogControllerTest extends TestCase
      */
     public function testLog10(): void
     {
-        $_SERVER['CONTENT_TYPE'] = 'application/json';
-        $_SERVER['HTTP_CONTENT_TYPE'] = 'application/json';
+        // Setup the mock input data
+        $inputData = ['a' => 10.0];
+        $this->mockInput(json_encode($inputData));
 
-        // Mock the input stream
-        $this->mockInputData(['a' => 100]);
-
+        // Start output buffering to capture the output
         ob_start();
         $this->controller->log10();
         $output = ob_get_clean();
 
+        // Verify the output
         $result = json_decode($output, true);
         $this->assertIsArray($result);
         $this->assertArrayHasKey('result', $result);
-        $this->assertEqualsWithDelta(2.0, $result['result'], 0.0001);
+        $this->assertEqualsWithDelta(1.0, $result['result'], 0.0001);
     }
 
     /**
      * @runInSeparateProcess
      */
-    public function testLogWithNegativeInput(): void
+    public function testNaturalLogWithZeroInput(): void
     {
-        $_SERVER['CONTENT_TYPE'] = 'application/json';
-        $_SERVER['HTTP_CONTENT_TYPE'] = 'application/json';
+        // Setup the mock input data
+        $inputData = ['a' => 0.0];
+        $this->mockInput(json_encode($inputData));
 
-        // Mock the input stream
-        $this->mockInputData(['a' => -1]);
-
+        // Start output buffering to capture the output
         ob_start();
         $this->controller->naturalLog();
         $output = ob_get_clean();
 
+        // Verify the output (should be an error)
         $result = json_decode($output, true);
         $this->assertIsArray($result);
         $this->assertArrayHasKey('error', $result);
@@ -94,37 +102,57 @@ class LogControllerTest extends TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testLogWithMissingInput(): void
+    public function testNaturalLogWithNegativeInput(): void
     {
-        $_SERVER['CONTENT_TYPE'] = 'application/json';
-        $_SERVER['HTTP_CONTENT_TYPE'] = 'application/json';
+        // Setup the mock input data
+        $inputData = ['a' => -1.0];
+        $this->mockInput(json_encode($inputData));
 
-        // Mock the input stream with missing 'a' parameter
-        $this->mockInputData([]);
-
+        // Start output buffering to capture the output
         ob_start();
         $this->controller->naturalLog();
         $output = ob_get_clean();
 
+        // Verify the output (should be an error)
+        $result = json_decode($output, true);
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('error', $result);
+        $this->assertStringContainsString('positive number', $result['error']);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testNaturalLogWithMissingInput(): void
+    {
+        // Setup the mock input data
+        $inputData = []; // Missing 'a' parameter
+        $this->mockInput(json_encode($inputData));
+
+        // Start output buffering to capture the output
+        ob_start();
+        $this->controller->naturalLog();
+        $output = ob_get_clean();
+
+        // Verify the output (should be an error)
         $result = json_decode($output, true);
         $this->assertIsArray($result);
         $this->assertArrayHasKey('error', $result);
         $this->assertStringContainsString('Missing required parameter', $result['error']);
     }
 
-    private function mockInputData(array $data): void
+    /**
+     * Mocks the PHP input stream with the given data
+     */
+    private function mockInput(string $data): void
     {
-        $json = json_encode($data);
-
-        // Create a temporary stream
         $stream = fopen('php://memory', 'r+');
-        fwrite($stream, $json);
+        fwrite($stream, $data);
         rewind($stream);
 
-        // Mock the php://input stream
-        $GLOBALS['HTTP_RAW_POST_DATA'] = $json;
+        $GLOBALS['HTTP_RAW_POST_DATA'] = $data;
         
         // Create a function to override file_get_contents for php://input
-        require_once __DIR__ . '/mock_file_get_contents.php';
+        require_once __DIR__ . '/file_get_contents_mock.php';
     }
 }
