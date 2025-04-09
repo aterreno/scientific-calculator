@@ -1,0 +1,21 @@
+{
+    "name": "calculator/log-service",
+    "description": "Logarithm service for microservice calculator",
+    "type": "project",
+    "require": {
+        "php": "^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Calculator\\LogService\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Calculator\\LogService\\Tests\\": "tests/"
+        }
+    }
+}

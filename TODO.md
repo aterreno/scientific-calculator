@@ -1,0 +1,5 @@
+- Unit Tests
+- Dev Envs https://devenv.sh/getting-started/#1-install-nix
+- Cybersec
+- CI/CD
+- Upgrade to latest (framework, sdks, images)

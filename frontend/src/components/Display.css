@@ -1,0 +1,16 @@
+.calculator-display {
+  background-color: #1c1c1c;
+  color: white;
+  font-size: 32px;
+  font-family: 'Courier New', Courier, monospace;
+  text-align: right;
+  padding: 12px 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.calculator-display-text {
+  overflow: auto;
+  white-space: nowrap;
+}

@@ -1,0 +1,199 @@
+# Common ignores for all projects
+.DS_Store
+.idea/
+.vscode/
+*.log
+*.swp
+*~
+
+###################
+# Node.js (API Gateway, Frontend)
+###################
+node_modules/
+npm-debug.log
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+.npm/
+.pnp/
+.pnp.js
+
+# Frontend build outputs
+/frontend/build/
+/frontend/dist/
+
+###################
+# Rust (Addition Service)
+###################
+/services/addition-service-rust/target/
+/services/addition-service-rust/Cargo.lock
+/services/addition-service-rust/**/*.rs.bk
+
+###################
+# Go (Subtraction Service)
+###################
+/services/subtraction-service-go/bin/
+/services/subtraction-service-go/pkg/
+/services/subtraction-service-go/src/vendor/
+/services/subtraction-service-go/src/subtraction-service
+/services/subtraction-service-go/subtraction-service
+
+###################
+# Python (Multiplication Service)
+###################
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+venv/
+.env
+.venv
+.pytest_cache/
+pytest_cache/
+
+###################
+# Ruby (Division Service)
+###################
+*.gem
+*.rbc
+.bundle
+.config
+vendor/bundle
+lib/bundler/man
+.rvmrc
+.ruby-version
+.ruby-gemset
+
+###################
+# Java (Power Service)
+###################
+/services/power-service-java/target/
+/services/power-service-java/.mvn/
+/services/power-service-java/mvnw
+/services/power-service-java/mvnw.cmd
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+###################
+# F# (Square Root Service)
+###################
+/services/square-root-service-fsharp/bin/
+/services/square-root-service-fsharp/obj/
+/services/square-root-service-fsharp/.ionide/
+/services/square-root-service-fsharp/out/
+
+###################
+# PHP (Log Service)
+###################
+/services/log-service-php/vendor/
+/services/log-service-php/composer.lock
+
+###################
+# Kotlin (Trig Service)
+###################
+/services/trig-service-kotlin/build/
+/services/trig-service-kotlin/.gradle/
+/services/trig-service-kotlin/out/
+/services/trig-service-kotlin/gradle/wrapper/
+
+###################
+# C# (Memory Service)
+###################
+/services/memory-service-csharp/bin/
+/services/memory-service-csharp/obj/
+/services/memory-service-csharp/out/
+*.csproj.user
+*.userprefs
+*.suo
+*.user
+.vs/
+
+###################
+# Elixir (Factorial Service)
+###################
+/services/factorial-service-elixir/_build/
+/services/factorial-service-elixir/cover/
+/services/factorial-service-elixir/deps/
+/services/factorial-service-elixir/doc/
+/services/factorial-service-elixir/priv/static/cache_manifest.json
+/services/factorial-service-elixir/.fetch
+
+###################
+# Julia (Matrix Service)
+###################
+/services/matrix-service-julia/Manifest.toml.bak
+/services/matrix-service-julia/.julia/
+
+###################
+# Scala (Finance Service)
+###################
+/services/finance-service-scala/target/
+/services/finance-service-scala/project/target/
+/services/finance-service-scala/project/project/
+/services/finance-service-scala/.bsp/
+
+###################
+# Swift (Bitwise Service)
+###################
+/services/bitwise-service-swift/.build/
+/services/bitwise-service-swift/Packages/
+/services/bitwise-service-swift/*.xcodeproj/
+/services/bitwise-service-swift/DerivedData/
+/services/bitwise-service-swift/.swiftpm/
+
+###################
+# Clojure (Complex Numbers Service)
+###################
+/services/complex-service-clojure/target/
+/services/complex-service-clojure/classes/
+/services/complex-service-clojure/.nrepl-port
+/services/complex-service-clojure/.lein-*
+/services/complex-service-clojure/.cpcache/
+
+###################
+# Docker
+###################
+.dockerignore
+
+###################
+# Test results across all services
+###################
+**/test-results/
+**/test-reports/
+**/coverage/
+**/jacoco/
+**/htmlcov/
+
+###################
+# Secrets (Security)
+###################
+**/secrets.yml
+**/secrets.yaml
+**/secrets.json
+**/secrets.env
+**/*.pem
+**/*.key
+.env
+.env.local
+.env.dev
+.env.prod

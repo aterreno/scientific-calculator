@@ -1,0 +1,150 @@
+services:
+  # API Gateway
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8000:8000"
+    depends_on:
+      - addition-service
+      - subtraction-service
+      - multiplication-service
+      - division-service
+      - power-service
+      - square-root-service
+      # - log-service
+      # - trig-service
+      # - memory-service
+      # - factorial-service
+      # - conversion-service
+      # - matrix-service
+      # - bitwise-service
+      # - complex-service
+    networks:
+      - calc-network
+
+  # Rust Addition Service
+  addition-service:
+    build: ./services/addition-service-rust
+    ports:
+      - "8001:8001"
+    networks:
+      - calc-network
+
+  # Go Subtraction Service
+  subtraction-service:
+    build: ./services/subtraction-service-go
+    ports:
+      - "8002:8002"
+    networks:
+      - calc-network
+
+  # Python Multiplication Service
+  multiplication-service:
+    build: ./services/multiplication-service-python
+    ports:
+      - "8003:8003"
+    networks:
+      - calc-network
+
+  # Ruby Division Service
+  division-service:
+    build: ./services/division-service-ruby
+    ports:
+      - "8004:8004"
+    networks:
+      - calc-network
+
+  # Java Power Service
+  power-service:
+    build: ./services/power-service-java
+    ports:
+      - "8005:8005"
+    networks:
+      - calc-network
+
+  # F# Square Root Service
+  square-root-service:
+    build: ./services/square-root-service-fsharp
+    ports:
+      - "8006:8006"
+    networks:
+      - calc-network
+
+  # PHP Logarithm Service
+  log-service:
+    build: ./services/log-service-php
+    ports:
+      - "8007:8007"
+    networks:
+      - calc-network
+
+  # Kotlin Trigonometry Service
+  trig-service:
+    build: ./services/trig-service-kotlin
+    ports:
+      - "8008:8008"
+    networks:
+      - calc-network
+
+  # C# Memory Service
+  memory-service:
+    build: ./services/memory-service-csharp
+    ports:
+      - "8009:8009"
+    networks:
+      - calc-network
+
+  # Elixir Factorial Service
+  factorial-service:
+    build: ./services/factorial-service-elixir
+    ports:
+      - "8010:8010"
+    networks:
+      - calc-network
+
+
+  # TypeScript Conversion Service
+  conversion-service:
+    build: ./services/conversion-service-typescript
+    ports:
+      - "8012:8012"
+    networks:
+      - calc-network
+
+  # Julia Matrix Service
+  matrix-service:
+    build: ./services/matrix-service-julia
+    ports:
+      - "8014:8014"
+    networks:
+      - calc-network
+
+  # Swift Bitwise Service
+  bitwise-service:
+    build: ./services/bitwise-service-swift
+    ports:
+      - "8016:8016"
+    networks:
+      - calc-network
+
+  # Clojure Complex Numbers Service
+  complex-service:
+    build: ./services/complex-service-clojure
+    ports:
+      - "8017:8017"
+    networks:
+      - calc-network
+
+  # Frontend service
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway
+    networks:
+      - calc-network
+
+networks:
+  calc-network:
+    driver: bridge

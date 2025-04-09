@@ -1,0 +1,114 @@
+.calculator-keypad {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+}
+
+.input-keys {
+  display: grid;
+  grid-column: 1 / span 4;
+  grid-gap: 10px;
+}
+
+.scientific-function-keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  margin-bottom: 10px;
+}
+
+.memory-keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  margin-bottom: 10px;
+}
+
+.function-keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  margin-bottom: 10px;
+}
+
+.digit-keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.operator-keys {
+  display: grid;
+  grid-column: 5;
+  grid-gap: 10px;
+}
+
+.calculator-keypad button {
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.2s;
+}
+
+.digit-keys button {
+  background-color: #4a4a4a;
+  color: white;
+}
+
+.digit-keys button:hover {
+  background-color: #5a5a5a;
+}
+
+.function-keys button {
+  background-color: #3a3a3a;
+  color: white;
+}
+
+.function-keys button:hover {
+  background-color: #4a4a4a;
+}
+
+.memory-keys button {
+  background-color: #2d2d2d;
+  color: #ffcc00;
+}
+
+.memory-keys button:hover {
+  background-color: #3d3d3d;
+}
+
+.scientific-function-keys button {
+  background-color: #2d2d2d;
+  color: #00ffcc;
+}
+
+.scientific-function-keys button:hover {
+  background-color: #3d3d3d;
+}
+
+.operator-keys button {
+  background-color: #ff9500;
+  color: white;
+}
+
+.operator-keys button:hover {
+  background-color: #ffb340;
+}
+
+.key-0 {
+  grid-column: 1 / span 2;
+}
+
+.key-equals {
+  background-color: #ff9500 !important;
+  color: white;
+}
+
+.key-clear-all {
+  background-color: #ff3b30 !important;
+  color: white;
+}
