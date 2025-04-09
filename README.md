@@ -14,7 +14,7 @@ This project implements a scientific calculator with each operation handled by a
 - Square Root: F#
 - Logarithm: PHP
 - Trigonometry: Kotlin
-- Memory Operations: C# - works
+- Memory Operations: C#
 - Combinatorics/Factorial: Elixir - doesn't works
 - Unit Conversion: TypeScript  - frontend not connected
 - Matrix Operations: Julia  - frontend not connected

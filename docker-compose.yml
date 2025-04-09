@@ -13,7 +13,7 @@ services:
       - square-root-service
       - log-service
       - trig-service
-      # - memory-service
+      - memory-service
       # - factorial-service
       # - conversion-service
       # - matrix-service
