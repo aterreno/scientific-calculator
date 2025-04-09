@@ -145,14 +145,6 @@ hs_err_pid*
 /services/matrix-service-julia/.julia/
 
 ###################
-# Scala (Finance Service)
-###################
-/services/finance-service-scala/target/
-/services/finance-service-scala/project/target/
-/services/finance-service-scala/project/project/
-/services/finance-service-scala/.bsp/
-
-###################
 # Swift (Bitwise Service)
 ###################
 /services/bitwise-service-swift/.build/
