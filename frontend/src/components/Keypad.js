@@ -34,6 +34,7 @@ const Keypad = ({
           <button className="key-perm" onClick={() => onSpecialOperation('permutation')}>nPr</button>
           <button className="key-comb" onClick={() => onSpecialOperation('combination')}>nCr</button>
           <button className="key-convert" onClick={() => onSpecialOperation('convert')}>Conv</button>
+          <button className="key-matrix" onClick={() => onSpecialOperation('matrix')}>Matrix</button>
         </div>
         
         {/* Memory Functions */}

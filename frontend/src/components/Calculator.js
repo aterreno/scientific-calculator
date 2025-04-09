@@ -4,6 +4,7 @@ import './Calculator.css';
 import Display from './Display';
 import Keypad from './Keypad';
 import ConversionModal from './ConversionModal';
+import MatrixModal from './MatrixModal';
 
 const Calculator = () => {
   const [display, setDisplay] = useState('0');
@@ -165,6 +166,10 @@ const Calculator = () => {
         setShowConversionModal(true);
         return; // Exit early to prevent display update
         break;
+      case 'matrix':
+        setShowMatrixModal(true);
+        return; // Exit early to prevent display update
+        break;
       default:
         return;
     }
@@ -212,8 +217,9 @@ const Calculator = () => {
   // Advanced operations menu
   const [showAdvancedMenu, setShowAdvancedMenu] = useState(false);
   
-  // Conversion modal state
+  // Modal states
   const [showConversionModal, setShowConversionModal] = useState(false);
+  const [showMatrixModal, setShowMatrixModal] = useState(false);
   
   const handleAdvancedOperation = (type) => {
     setShowAdvancedMenu(false);
@@ -226,10 +232,7 @@ const Calculator = () => {
         }
         break;
       case 'matrix':
-        const matrixOp = prompt('Select matrix operation: add, multiply, determinant, inverse');
-        if (matrixOp) {
-          alert(`Matrix operation ${matrixOp} would be displayed here`);
-        }
+        setShowMatrixModal(true);
         break;
       case 'bitwise':
         const bitwiseOp = prompt('Select bitwise operation: and, or, xor, not, left-shift, right-shift');
@@ -250,6 +253,16 @@ const Calculator = () => {
     setDisplay(String(result));
     setWaitingForOperand(true);
     setShowConversionModal(false);
+  };
+  
+  // Handle matrix result
+  const handleMatrixResult = (result) => {
+    // If result is a number (like determinant), display it
+    if (typeof result === 'number') {
+      setDisplay(String(result));
+      setWaitingForOperand(true);
+    }
+    // For matrix results, they will be displayed in the modal
   };
 
   return (
@@ -288,6 +301,13 @@ const Calculator = () => {
         isOpen={showConversionModal}
         onClose={() => setShowConversionModal(false)}
         onConversionResult={handleConversionResult}
+      />
+      
+      {/* Matrix Modal */}
+      <MatrixModal
+        isOpen={showMatrixModal}
+        onClose={() => setShowMatrixModal(false)}
+        onMatrixResult={handleMatrixResult}
       />
     </div>
   );

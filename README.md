@@ -17,11 +17,11 @@ This project implements a scientific calculator with each operation handled by a
 - Memory Operations: C#
 - Combinatorics/Factorial: Elixir
 - Unit Conversion: TypeScript
-- Matrix Operations: Julia  - frontend not connected
+- Matrix Operations: Julia
 - Bitwise Operations: Swift - frontend not connected
-- Complex Numbers: Clojure - doesn't works
-- API Gateway: Node.js - works 
-- Frontend: React - works with ui bits missing
+- Complex Numbers: Clojure - doesn't work
+- API Gateway: Node.js - tests?
+- Frontend: React
 
 ## Services
 

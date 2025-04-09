@@ -15,8 +15,8 @@ services:
       - trig-service
       - memory-service
       - factorial-service
-      # - conversion-service
-      # - matrix-service
+      - conversion-service
+      - matrix-service
       # - bitwise-service
       # - complex-service
     networks:

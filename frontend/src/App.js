@@ -12,7 +12,7 @@ function App() {
         <Calculator />
       </main>
       <footer className="App-footer">
-        <p>Powered by 10 microservices written in different languages</p>
+        <p>Powered by 17 microservices written in different languages</p>
       </footer>
     </div>
   );

@@ -122,11 +122,20 @@ app.post('/calculate', async (req, res) => {
         }
         break;
       case 'matrix-add':
+        serviceUrl = SERVICES.matrix;
+        endpoint = '/add';
+        break;
       case 'matrix-multiply':
+        serviceUrl = SERVICES.matrix;
+        endpoint = '/multiply';
+        break;
       case 'matrix-determinant':
+        serviceUrl = SERVICES.matrix;
+        endpoint = '/determinant';
+        break;
       case 'matrix-inverse':
         serviceUrl = SERVICES.matrix;
-        endpoint = `/${operation.replace('matrix-', '')}`;
+        endpoint = '/inverse';
         break;
       case 'and':
       case 'or':

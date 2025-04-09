@@ -19,7 +19,7 @@
 
 .factorial-keys {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-gap: 10px;
   margin-bottom: 10px;
 }
@@ -175,6 +175,87 @@
   background-color: #f0f0f0;
   border-radius: 4px;
   text-align: center;
+}
+
+/* Matrix Modal Styles */
+.matrix-modal .conversion-content {
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.matrix-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.matrix-input-container {
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.matrix-input-container h4 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.matrix-dimensions {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.matrix-dimensions label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.matrix-dimensions input {
+  width: 50px;
+  padding: 5px;
+}
+
+.matrix-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+}
+
+.matrix-row {
+  display: flex;
+  gap: 5px;
+}
+
+.matrix-row input {
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  padding: 5px;
+}
+
+.matrix-cell {
+  width: 50px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.result-grid {
+  margin-top: 10px;
+}
+
+@media (min-width: 768px) {
+  .matrix-inputs {
+    flex-direction: row;
+  }
 }
 
 .operator-keys button {
