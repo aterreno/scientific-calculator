@@ -1,0 +1,37 @@
+name: CI for Factorial Service (Elixir)
+
+on:
+  push:
+    paths:
+      - 'services/factorial-service-elixir/**'
+  pull_request:
+    paths:
+      - 'services/factorial-service-elixir/**'
+
+jobs:
+  test-and-build:
+    name: Test and Build Factorial Service (Elixir)
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up Elixir environment
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: '1.14.x'
+          otp-version: '25.x'
+
+      # Run the tests
+      - name: Run Tests
+        working-directory: ./services/factorial-service-elixir
+        run: ./run.sh test
+
+      # Build Docker image if tests pass
+      - name: Build Docker Image
+        working-directory: ./services/factorial-service-elixir
+        run: |
+          docker build -t factorial-service-elixir:latest .

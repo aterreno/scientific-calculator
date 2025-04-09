@@ -1,0 +1,36 @@
+name: CI for Conversion Service (TypeScript)
+
+on:
+  push:
+    paths:
+      - 'services/conversion-service-typescript/**'
+  pull_request:
+    paths:
+      - 'services/conversion-service-typescript/**'
+
+jobs:
+  test-and-build:
+    name: Test and Build Conversion Service (TypeScript)
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Run the tests
+      - name: Run Tests
+        working-directory: ./services/conversion-service-typescript
+        run: ./run.sh test
+
+      # Build Docker image if tests pass
+      - name: Build Docker Image
+        working-directory: ./services/conversion-service-typescript
+        run: |
+          docker build -t conversion-service-typescript:latest .

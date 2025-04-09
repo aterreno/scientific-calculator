@@ -1,0 +1,43 @@
+name: CI for Complex Service (Clojure)
+
+on:
+  push:
+    paths:
+      - 'services/complex-service-clojure/**'
+  pull_request:
+    paths:
+      - 'services/complex-service-clojure/**'
+
+jobs:
+  test-and-build:
+    name: Test and Build Complex Service (Clojure)
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up Clojure environment
+      - name: Set up Clojure
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '23'
+
+      - name: Install clojure tools
+        uses: DeLaGuardo/setup-clojure@13.2
+        with: 
+          cli: 1.12.0.1530
+
+          
+      # Run the tests
+      - name: Run Tests
+        working-directory: ./services/complex-service-clojure
+        run: ./run.sh test
+
+      # Build Docker image if tests pass
+      - name: Build Docker Image
+        working-directory: ./services/complex-service-clojure
+        run: |
+          docker build -t complex-service-clojure:latest .

@@ -1,0 +1,36 @@
+name: CI for Matrix Service (Julia)
+
+on:
+  push:
+    paths:
+      - 'services/matrix-service-julia/**'
+  pull_request:
+    paths:
+      - 'services/matrix-service-julia/**'
+
+jobs:
+  test-and-build:
+    name: Test and Build Matrix Service (Julia)
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up Julia environment
+      - name: Set up Julia
+        uses: julia-actions/setup-julia@v1
+        with:
+          version: '1.8'
+
+      # Run the tests
+      - name: Run Tests
+        working-directory: ./services/matrix-service-julia
+        run: ./run.sh test
+
+      # Build Docker image if tests pass
+      - name: Build Docker Image
+        working-directory: ./services/matrix-service-julia
+        run: |
+          docker build -t matrix-service-julia:latest .

@@ -1,0 +1,36 @@
+name: CI for Multiplication Service (Python)
+
+on:
+  push:
+    paths:
+      - 'services/multiplication-service-python/**'
+  pull_request:
+    paths:
+      - 'services/multiplication-service-python/**'
+
+jobs:
+  test-and-build:
+    name: Test and Build Multiplication Service (Python)
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      # Run the tests
+      - name: Run Tests
+        working-directory: ./services/multiplication-service-python
+        run: ./run.sh test
+
+      # Build Docker image if tests pass
+      - name: Build Docker Image
+        working-directory: ./services/multiplication-service-python
+        run: |
+          docker build -t multiplication-service-python:latest .

@@ -1,0 +1,36 @@
+name: CI for Subtraction Service (Go)
+
+on:
+  push:
+    paths:
+      - 'services/subtraction-service-go/**'
+  pull_request:
+    paths:
+      - 'services/subtraction-service-go/**'
+
+jobs:
+  test-and-build:
+    name: Test and Build Subtraction Service (Go)
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up Go environment
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+
+      # Run the tests
+      - name: Run Tests
+        working-directory: ./services/subtraction-service-go
+        run: ./run.sh test
+
+      # Build Docker image if tests pass
+      - name: Build Docker Image
+        working-directory: ./services/subtraction-service-go
+        run: |
+          docker build -t subtraction-service-go:latest .

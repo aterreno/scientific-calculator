@@ -1,0 +1,36 @@
+name: CI for Memory Service (C#)
+
+on:
+  push:
+    paths:
+      - 'services/memory-service-csharp/**'
+  pull_request:
+    paths:
+      - 'services/memory-service-csharp/**'
+
+jobs:
+  test-and-build:
+    name: Test and Build Memory Service (C#)
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up .NET environment
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
+      # Run the tests
+      - name: Run Tests
+        working-directory: ./services/memory-service-csharp
+        run: ./run.sh test
+
+      # Build Docker image if tests pass
+      - name: Build Docker Image
+        working-directory: ./services/memory-service-csharp
+        run: |
+          docker build -t memory-service-csharp:latest .

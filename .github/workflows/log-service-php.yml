@@ -1,0 +1,36 @@
+name: CI for Log Service (PHP)
+
+on:
+  push:
+    paths:
+      - 'services/log-service-php/**'
+  pull_request:
+    paths:
+      - 'services/log-service-php/**'
+
+jobs:
+  test-and-build:
+    name: Test and Build Log Service (PHP)
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up PHP environment
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      # Run the tests
+      - name: Run Tests
+        working-directory: ./services/log-service-php
+        run: ./run.sh test
+
+      # Build Docker image if tests pass
+      - name: Build Docker Image
+        working-directory: ./services/log-service-php
+        run: |
+          docker build -t log-service-php:latest .

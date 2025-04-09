@@ -1,0 +1,36 @@
+name: CI for Division Service (Ruby)
+
+on:
+  push:
+    paths:
+      - 'services/division-service-ruby/**'
+  pull_request:
+    paths:
+      - 'services/division-service-ruby/**'
+
+jobs:
+  test-and-build:
+    name: Test and Build Division Service (Ruby)
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up Ruby environment
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      # Run the tests
+      - name: Run Tests
+        working-directory: ./services/division-service-ruby
+        run: ./run.sh test
+
+      # Build Docker image if tests pass
+      - name: Build Docker Image
+        working-directory: ./services/division-service-ruby
+        run: |
+          docker build -t division-service-ruby:latest .

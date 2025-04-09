@@ -1,0 +1,36 @@
+name: CI for Addition Service (Rust)
+
+on:
+  push:
+    paths:
+      - 'services/addition-service-rust/**'
+  pull_request:
+    paths:
+      - 'services/addition-service-rust/**'
+
+jobs:
+  test-and-build:
+    name: Test and Build Addition Service (Rust)
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up Rust environment
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      # Run the tests
+      - name: Run Tests
+        working-directory: ./services/addition-service-rust
+        run: ./run.sh test
+
+      # Build Docker image if tests pass
+      - name: Build Docker Image
+        working-directory: ./services/addition-service-rust
+        run: |
+          docker build -t addition-service-rust:latest .

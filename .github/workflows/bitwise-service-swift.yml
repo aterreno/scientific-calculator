@@ -1,0 +1,34 @@
+name: CI for Bitwise Service (Swift)
+
+on:
+  push:
+    paths:
+      - 'services/bitwise-service-swift/**'
+  pull_request:
+    paths:
+      - 'services/bitwise-service-swift/**'
+
+jobs:
+  test-and-build:
+    name: Test and Build Bitwise Service (Swift)
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up Swift environment
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v1
+
+      # Run the tests
+      - name: Run Tests
+        working-directory: ./services/bitwise-service-swift
+        run: ./run.sh test
+
+      # Build Docker image if tests pass
+      - name: Build Docker Image
+        working-directory: ./services/bitwise-service-swift
+        run: |
+          docker build -t bitwise-service-swift:latest .
