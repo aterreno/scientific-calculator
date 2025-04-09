@@ -13,7 +13,7 @@ This project implements a scientific calculator with each operation handled by a
 - Power: Java
 - Square Root: F#
 - Logarithm: PHP
-- Trigonometry: Kotlin - doesn't works
+- Trigonometry: Kotlin
 - Memory Operations: C# - works
 - Combinatorics/Factorial: Elixir - doesn't works
 - Unit Conversion: TypeScript  - frontend not connected

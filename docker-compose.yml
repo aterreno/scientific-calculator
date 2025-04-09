@@ -11,8 +11,8 @@ services:
       - division-service
       - power-service
       - square-root-service
-      # - log-service
-      # - trig-service
+      - log-service
+      - trig-service
       # - memory-service
       # - factorial-service
       # - conversion-service
