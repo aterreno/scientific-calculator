@@ -7,3 +7,6 @@
 - Limits on picking up latest versions, but could be fixed perhaps with better prompting
 - Spotted a problem with elixir code base; validation on incoming json, if it's a string
 - TypeScript seems 'made for vibe-coding', type are helping, fresh examples to pull code from, works best here
+
+- Not vibing 100% - and using copilot 
+- https://nektosact.com/introduction.html is great
