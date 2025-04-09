@@ -2,6 +2,7 @@ services:
   # API Gateway
   api-gateway:
     build: ./api-gateway
+    image: aterreno/sci-calc-api-gateway
     ports:
       - "8000:8000"
     depends_on:
@@ -25,6 +26,7 @@ services:
   # Rust Addition Service
   addition-service:
     build: ./services/addition-service-rust
+    image: aterreno/sci-calc-addition-service
     ports:
       - "8001:8001"
     networks:
@@ -33,6 +35,7 @@ services:
   # Go Subtraction Service
   subtraction-service:
     build: ./services/subtraction-service-go
+    image: aterreno/sci-calc-subtraction-service
     ports:
       - "8002:8002"
     networks:
@@ -41,6 +44,7 @@ services:
   # Python Multiplication Service
   multiplication-service:
     build: ./services/multiplication-service-python
+    image: aterreno/sci-calc-multiplication-service
     ports:
       - "8003:8003"
     networks:
@@ -49,6 +53,7 @@ services:
   # Ruby Division Service
   division-service:
     build: ./services/division-service-ruby
+    image: aterreno/sci-calc-division-service
     ports:
       - "8004:8004"
     networks:
@@ -57,6 +62,7 @@ services:
   # Java Power Service
   power-service:
     build: ./services/power-service-java
+    image: aterreno/sci-calc-power-service
     ports:
       - "8005:8005"
     networks:
@@ -65,6 +71,7 @@ services:
   # F# Square Root Service
   square-root-service:
     build: ./services/square-root-service-fsharp
+    image: aterreno/sci-calc-square-root-service
     ports:
       - "8006:8006"
     networks:
@@ -73,6 +80,7 @@ services:
   # PHP Logarithm Service
   log-service:
     build: ./services/log-service-php
+    image: aterreno/sci-calc-log-service
     ports:
       - "8007:8007"
     networks:
@@ -81,6 +89,7 @@ services:
   # Kotlin Trigonometry Service
   trig-service:
     build: ./services/trig-service-kotlin
+    image: aterreno/sci-calc-trig-service
     ports:
       - "8008:8008"
     networks:
@@ -89,6 +98,7 @@ services:
   # C# Memory Service
   memory-service:
     build: ./services/memory-service-csharp
+    image: aterreno/sci-calc-memory-service
     ports:
       - "8009:8009"
     networks:
@@ -97,6 +107,7 @@ services:
   # Elixir Factorial Service
   factorial-service:
     build: ./services/factorial-service-elixir
+    image: aterreno/sci-calc-factorial-service
     ports:
       - "8010:8010"
     networks:
@@ -106,6 +117,7 @@ services:
   # TypeScript Conversion Service
   conversion-service:
     build: ./services/conversion-service-typescript
+    image: aterreno/sci-calc-conversion-service
     ports:
       - "8012:8012"
     networks:
@@ -114,6 +126,7 @@ services:
   # Julia Matrix Service
   matrix-service:
     build: ./services/matrix-service-julia
+    image: aterreno/sci-calc-matrix-service
     ports:
       - "8014:8014"
     networks:
@@ -122,6 +135,7 @@ services:
   # Swift Bitwise Service
   bitwise-service:
     build: ./services/bitwise-service-swift
+    image: aterreno/sci-calc-bitwise-service
     ports:
       - "8016:8016"
     networks:
@@ -130,6 +144,7 @@ services:
   # Clojure Complex Numbers Service
   complex-service:
     build: ./services/complex-service-clojure
+    image: aterreno/sci-calc-complex-service
     ports:
       - "8017:8017"
     networks:
@@ -138,6 +153,7 @@ services:
   # Frontend service
   frontend:
     build: ./frontend
+    image: aterreno/sci-calc-frontend
     ports:
       - "3000:3000"
     depends_on:
