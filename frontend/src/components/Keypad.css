@@ -29,6 +29,17 @@
   margin-top: -3px; /* Make rows closer together */
 }
 
+.complex-keys {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 8px;
+  margin-bottom: 8px;
+}
+
+.complex-keys.advanced-ops {
+  margin-top: -3px; /* Make rows closer together */
+}
+
 .memory-keys {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

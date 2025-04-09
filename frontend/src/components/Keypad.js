@@ -41,6 +41,10 @@ const Keypad = ({
           <button className="key-matrix" onClick={() => onSpecialOperation('matrix')}>Matrix</button>
           <button className="key-bitwise" onClick={() => onSpecialOperation('bitwise')}>Bit</button>
         </div>
+
+        <div className="complex-keys advanced-ops">
+          <button className="key-bitwise" onClick={() => onSpecialOperation('complex')}>Complex Numbers</button>          
+        </div>
         
         {/* Memory Functions */}
         <div className="memory-keys">

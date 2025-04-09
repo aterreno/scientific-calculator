@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
 }
 
 .App-header {
@@ -25,4 +26,47 @@ main {
   justify-content: center;
   align-items: center;
   padding: 20px;
+}
+
+/* GitHub Ribbon */
+.github-ribbon {
+  position: fixed;
+  bottom: 40px;
+  right: -90px;
+  background-color: #e74c3c;
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 50px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 2;
+  transform: rotate(-45deg);
+  box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+  z-index: 9999;
+  transition: background-color 0.3s;
+  width: 200px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.github-ribbon::before,
+.github-ribbon::after {
+  content: "";
+  width: 100%;
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 0;
+  height: 1px;
+  background-color: rgba(255,255,255,0.3);
+}
+
+.github-ribbon::after {
+  bottom: 1px;
+  top: auto;
+}
+
+.github-ribbon:hover {
+  background-color: #2ecc71;
+  color: white;
 }

@@ -175,6 +175,12 @@ const Calculator = () => {
         setShowBitwiseModal(true);
         return; // Exit early to prevent display update
         break;
+      case 'complex':
+        const complexOp = prompt('Select complex operation: add, subtract, multiply, divide, magnitude, conjugate');
+        if (complexOp) {
+          handleComplexOperation(`complex-${complexOp}`);
+        }
+        return; // Exit early to prevent display update
       default:
         return;
     }
@@ -185,7 +191,7 @@ const Calculator = () => {
   
   // Complex number operations - for simplicity, we'll use a prompt for the second number
   const handleComplexOperation = async (op) => {
-    const realA = parseFloat(display);
+    const realA = parseFloat(prompt('Enter real part of first number:') || '0');
     const imagA = parseFloat(prompt('Enter imaginary part of first number:') || '0');
     
     let realB, imagB, result;
@@ -226,25 +232,15 @@ const Calculator = () => {
   const [showConversionModal, setShowConversionModal] = useState(false);
   const [showMatrixModal, setShowMatrixModal] = useState(false);
   const [showBitwiseModal, setShowBitwiseModal] = useState(false);
+ 
   
   const handleAdvancedOperation = (type) => {
-    setShowAdvancedMenu(false);
-    
     switch (type) {
       case 'complex':
         const complexOp = prompt('Select complex operation: add, subtract, multiply, divide, magnitude, conjugate');
         if (complexOp) {
           handleComplexOperation(`complex-${complexOp}`);
         }
-        break;
-      case 'matrix':
-        setShowMatrixModal(true);
-        break;
-      case 'bitwise':
-        setShowBitwiseModal(true);
-        break;
-      case 'conversion':
-        setShowConversionModal(true);
         break;
       default:
         break;
@@ -277,22 +273,7 @@ const Calculator = () => {
 
   return (
     <div className="calculator">
-      <Display value={display} />
-      <div className="advanced-menu-toggle">
-        <button onClick={() => setShowAdvancedMenu(!showAdvancedMenu)}>
-          {showAdvancedMenu ? 'Hide Advanced' : 'Show Advanced'}
-        </button>
-      </div>
-      
-      {showAdvancedMenu && (
-        <div className="advanced-menu">
-          <button onClick={() => handleAdvancedOperation('complex')}>Complex Numbers</button>
-          <button onClick={() => handleAdvancedOperation('matrix')}>Matrix</button>
-          <button onClick={() => handleAdvancedOperation('bitwise')}>Bitwise</button>
-          <button onClick={() => handleAdvancedOperation('conversion')}>Conversion</button>
-        </div>
-      )}
-      
+      <Display value={display} />            
       <Keypad
         onClearAll={clearAll}
         onClearDisplay={clearDisplay}

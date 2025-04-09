@@ -192,21 +192,7 @@ const BitwiseModal = ({ isOpen, onClose, onBitwiseResult }) => {
             {isLoading ? 'Calculating...' : 'Calculate'}
           </button>
           
-          {error && <p className="error-message">{error}</p>}
-          
-          {result !== null && (
-            <div className="bitwise-result">
-              <h4>Result:</h4>
-              <div className="result-value">
-                <div className="decimal-result">
-                  <strong>Decimal:</strong> {result}
-                </div>
-                <div className="binary-result">
-                  <strong>Binary:</strong> {formatNumber(result)}
-                </div>
-              </div>
-            </div>
-          )}
+          {error && <p className="error-message">{error}</p>}          
         </form>
       </div>
     </div>
