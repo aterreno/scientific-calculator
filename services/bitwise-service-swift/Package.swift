@@ -14,6 +14,10 @@ let package = Package(
                 .product(name: "Vapor", package: "vapor"),
             ],
             path: "Sources/BitwiseService"
+        ),
+        .testTarget(
+            name: "BitwiseServiceTests",
+            dependencies: ["BitwiseService"]
         )
     ]
 )

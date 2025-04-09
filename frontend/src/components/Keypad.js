@@ -28,13 +28,18 @@ const Keypad = ({
           <button className="key-power" onClick={() => onOperation('power')}>xʸ</button>
         </div>
         
-        {/* Factorial Functions */}
+        {/* Special Operations Row 1 */}
         <div className="factorial-keys">
           <button className="key-factorial" onClick={() => onSpecialOperation('factorial')}>n!</button>
           <button className="key-perm" onClick={() => onSpecialOperation('permutation')}>nPr</button>
           <button className="key-comb" onClick={() => onSpecialOperation('combination')}>nCr</button>
+        </div>
+        
+        {/* Special Operations Row 2 */}
+        <div className="factorial-keys advanced-ops">
           <button className="key-convert" onClick={() => onSpecialOperation('convert')}>Conv</button>
           <button className="key-matrix" onClick={() => onSpecialOperation('matrix')}>Matrix</button>
+          <button className="key-bitwise" onClick={() => onSpecialOperation('bitwise')}>Bit</button>
         </div>
         
         {/* Memory Functions */}

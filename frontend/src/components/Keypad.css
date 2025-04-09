@@ -1,64 +1,73 @@
 .calculator-keypad {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-gap: 10px;
+  grid-gap: 8px; /* Reduced gap for better spacing */
+  width: 100%;
 }
 
 .input-keys {
   display: grid;
   grid-column: 1 / span 4;
-  grid-gap: 10px;
+  grid-gap: 8px; /* Reduced gap to match calculator-keypad */
 }
 
 .scientific-function-keys {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
-  margin-bottom: 10px;
+  grid-gap: 8px;
+  margin-bottom: 8px;
 }
 
 .factorial-keys {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 10px;
-  margin-bottom: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 8px;
+  margin-bottom: 8px;
+}
+
+.factorial-keys.advanced-ops {
+  margin-top: -3px; /* Make rows closer together */
 }
 
 .memory-keys {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
-  margin-bottom: 10px;
+  grid-gap: 8px;
+  margin-bottom: 8px;
 }
 
 .function-keys {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
-  margin-bottom: 10px;
+  grid-gap: 8px;
+  margin-bottom: 8px;
 }
 
 .digit-keys {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
+  grid-gap: 8px;
 }
 
 .operator-keys {
   display: grid;
   grid-column: 5;
-  grid-gap: 10px;
+  grid-gap: 8px;
 }
 
 .calculator-keypad button {
-  height: 40px;
+  height: 36px; /* Slightly smaller buttons */
   border: none;
-  border-radius: 8px;
-  font-size: 18px;
+  border-radius: 6px;
+  font-size: 16px; /* Slightly smaller font */
   font-weight: bold;
   cursor: pointer;
   outline: none;
   transition: background-color 0.2s;
+  padding: 0 4px; /* Add horizontal padding */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .digit-keys button {
@@ -104,6 +113,29 @@
 
 .factorial-keys button:hover {
   background-color: #3d3d3d;
+}
+
+/* Specific styling for advanced operation buttons */
+.factorial-keys.advanced-ops button {
+  background-color: #2d2d4d; /* Slightly different shade */
+  color: #66ccff; /* Different color to distinguish */
+}
+
+.factorial-keys.advanced-ops button:hover {
+  background-color: #3d3d5d;
+}
+
+/* Specific button styling */
+.key-convert {
+  color: #ffcc66 !important;
+}
+
+.key-matrix {
+  color: #66ffcc !important;
+}
+
+.key-bitwise {
+  color: #ff6699 !important;
 }
 
 .conversion-modal {
@@ -256,6 +288,92 @@
   .matrix-inputs {
     flex-direction: row;
   }
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 420px) {
+  .calculator-keypad button {
+    height: 32px;
+    font-size: 14px;
+    padding: 0 2px;
+  }
+  
+  .scientific-function-keys,
+  .factorial-keys,
+  .memory-keys,
+  .function-keys,
+  .digit-keys,
+  .operator-keys {
+    grid-gap: 6px;
+  }
+  
+  .factorial-keys.advanced-ops {
+    margin-top: -4px;
+  }
+}
+
+/* Bitwise Modal Styles */
+.bitwise-modal .conversion-content {
+  max-width: 500px;
+}
+
+.bitwise-modal .operation-selection,
+.bitwise-modal .display-base-selection,
+.bitwise-modal .input-field {
+  margin-bottom: 15px;
+}
+
+.bitwise-modal label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.bitwise-modal select,
+.bitwise-modal input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.bitwise-modal small {
+  display: block;
+  margin-top: 4px;
+  color: #666;
+  font-size: 0.8em;
+}
+
+.bitwise-modal .error-message {
+  color: #d9534f;
+  margin: 10px 0;
+}
+
+.bitwise-result {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+.bitwise-result h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.result-value {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.decimal-result,
+.binary-result {
+  padding: 5px;
+  background-color: #fff;
+  border-radius: 3px;
+  border: 1px solid #ddd;
 }
 
 .operator-keys button {

@@ -18,39 +18,6 @@ struct ShiftRequest: Content {
     let bits: Int
 }
 
-struct BitwiseService {
-    
-    func and(_ a: Int, _ b: Int) -> Int {
-        print("Bitwise AND: \(a) & \(b) = \(a & b)")
-        return a & b
-    }
-    
-    func or(_ a: Int, _ b: Int) -> Int {
-        print("Bitwise OR: \(a) | \(b) = \(a | b)")
-        return a | b
-    }
-    
-    func xor(_ a: Int, _ b: Int) -> Int {
-        print("Bitwise XOR: \(a) ^ \(b) = \(a ^ b)")
-        return a ^ b
-    }
-    
-    func not(_ a: Int) -> Int {
-        print("Bitwise NOT: ~\(a) = \(~a)")
-        return ~a
-    }
-    
-    func leftShift(_ a: Int, _ bits: Int) -> Int {
-        print("Left Shift: \(a) << \(bits) = \(a << bits)")
-        return a << bits
-    }
-    
-    func rightShift(_ a: Int, _ bits: Int) -> Int {
-        print("Right Shift: \(a) >> \(bits) = \(a >> bits)")
-        return a >> bits
-    }
-}
-
 // Create application
 let app = Application()
 let bitwiseService = BitwiseService()

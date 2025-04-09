@@ -5,6 +5,7 @@ import Display from './Display';
 import Keypad from './Keypad';
 import ConversionModal from './ConversionModal';
 import MatrixModal from './MatrixModal';
+import BitwiseModal from './BitwiseModal';
 
 const Calculator = () => {
   const [display, setDisplay] = useState('0');
@@ -170,6 +171,10 @@ const Calculator = () => {
         setShowMatrixModal(true);
         return; // Exit early to prevent display update
         break;
+      case 'bitwise':
+        setShowBitwiseModal(true);
+        return; // Exit early to prevent display update
+        break;
       default:
         return;
     }
@@ -220,6 +225,7 @@ const Calculator = () => {
   // Modal states
   const [showConversionModal, setShowConversionModal] = useState(false);
   const [showMatrixModal, setShowMatrixModal] = useState(false);
+  const [showBitwiseModal, setShowBitwiseModal] = useState(false);
   
   const handleAdvancedOperation = (type) => {
     setShowAdvancedMenu(false);
@@ -235,10 +241,7 @@ const Calculator = () => {
         setShowMatrixModal(true);
         break;
       case 'bitwise':
-        const bitwiseOp = prompt('Select bitwise operation: and, or, xor, not, left-shift, right-shift');
-        if (bitwiseOp) {
-          alert(`Bitwise operation ${bitwiseOp} would be displayed here`);
-        }
+        setShowBitwiseModal(true);
         break;
       case 'conversion':
         setShowConversionModal(true);
@@ -263,6 +266,13 @@ const Calculator = () => {
       setWaitingForOperand(true);
     }
     // For matrix results, they will be displayed in the modal
+  };
+  
+  // Handle bitwise result
+  const handleBitwiseResult = (result) => {
+    setDisplay(String(result));
+    setWaitingForOperand(true);
+    setShowBitwiseModal(false);
   };
 
   return (
@@ -308,6 +318,13 @@ const Calculator = () => {
         isOpen={showMatrixModal}
         onClose={() => setShowMatrixModal(false)}
         onMatrixResult={handleMatrixResult}
+      />
+      
+      {/* Bitwise Modal */}
+      <BitwiseModal
+        isOpen={showBitwiseModal}
+        onClose={() => setShowBitwiseModal(false)}
+        onBitwiseResult={handleBitwiseResult}
       />
     </div>
   );

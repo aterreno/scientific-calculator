@@ -18,9 +18,9 @@ This project implements a scientific calculator with each operation handled by a
 - Combinatorics/Factorial: Elixir
 - Unit Conversion: TypeScript
 - Matrix Operations: Julia
-- Bitwise Operations: Swift - frontend not connected
+- Bitwise Operations: Swift
 - Complex Numbers: Clojure - doesn't work
-- API Gateway: Node.js - tests?
+- API Gateway: Node.js
 - Frontend: React
 
 ## Services

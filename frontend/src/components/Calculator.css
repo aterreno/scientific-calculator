@@ -1,10 +1,11 @@
 .calculator {
-  width: 320px;
+  width: 380px; /* Increased width to fit all buttons */
   background-color: #222;
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   margin: 0 auto;
   padding: 20px;
+  max-width: 95vw; /* Ensure it fits on mobile screens */
 }
 
 .advanced-menu-toggle {
