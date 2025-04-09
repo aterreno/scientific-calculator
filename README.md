@@ -19,7 +19,7 @@ This project implements a scientific calculator with each operation handled by a
 - Unit Conversion: TypeScript
 - Matrix Operations: Julia
 - Bitwise Operations: Swift
-- Complex Numbers: Clojure - doesn't work
+- Complex Numbers: Clojure
 - API Gateway: Node.js
 - Frontend: React
 

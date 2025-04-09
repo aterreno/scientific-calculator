@@ -8,7 +8,7 @@ RUN clojure -A:deps -P
 COPY . .
 RUN clojure -T:build uber
 
-FROM openjdk:17-slim
+FROM openjdk:23-jdk-slim
 
 WORKDIR /app
 

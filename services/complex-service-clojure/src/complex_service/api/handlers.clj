@@ -36,34 +36,43 @@
     (if (zero? denominator)
       (throw (IllegalArgumentException. "Division by zero"))
       (complex-number
-       (/ (+ (* a-real b-real) (* a-imag b-imag)) denominator)
-       (/ (- (* a-imag b-real) (* a-real b-imag)) denominator)))))
+       (double (/ (+ (* a-real b-real) (* a-imag b-imag)) denominator))
+       (double (/ (- (* a-imag b-real) (* a-real b-imag)) denominator))))))
 
 (defn magnitude-complex [a]
-  (math/sqrt (+ (math/expt (:real a) 2) (math/expt (:imag a) 2))))
+  (double (math/sqrt (+ (math/expt (:real a) 2) (math/expt (:imag a) 2)))))
 
 (defn conjugate-complex [a]
   (complex-number (:real a) (- (:imag a))))
 
 (defn log [operation a b result]
-  (println (format "%s: (%f + %fi) %s (%f + %fi) = (%f + %fi)"
-                   operation
-                   (:real a) (:imag a)
+  (println (format "%s: (%.2f + %.2fi) %s (%.2f + %.2fi) = (%.2f + %.2fi)"
                    (name operation)
-                   (:real b) (:imag b)
-                   (:real result) (:imag result))))
+                   (double (:real a)) (double (:imag a))
+                   (name operation)
+                   (double (:real b)) (double (:imag b))
+                   (double (:real result)) (double (:imag result)))))
 
 (defn log-single [operation a result]
-  (println (format "%s: %s(%f + %fi) = %s"
-                   operation
+  (println (format "%s: %s(%.2f + %.2fi) = %s"
                    (name operation)
-                   (:real a) (:imag a)
+                   (name operation)
+                   (double (:real a)) (double (:imag a))
                    (str result))))
+
+(defn get-nested-params [params]
+  (let [nested-params (get params :a params)]
+    nested-params))
 
 (defn add-handler [request]
   (let [params (:body-params request)
-        a (complex-number (:real-a params) (:imag-a params))
-        b (complex-number (:real-b params) (:imag-b params))
+        nested-params (get-nested-params params)
+        real-a (if (nil? (:real-a nested-params)) 0 (:real-a nested-params))
+        imag-a (if (nil? (:imag-a nested-params)) 0 (:imag-a nested-params))
+        real-b (if (nil? (:real-b nested-params)) 0 (:real-b nested-params))
+        imag-b (if (nil? (:imag-b nested-params)) 0 (:imag-b nested-params))
+        a (complex-number real-a imag-a)
+        b (complex-number real-b imag-b)
         result (add-complex a b)]
     (log :add a b result)
     {:status 200
@@ -71,8 +80,13 @@
 
 (defn subtract-handler [request]
   (let [params (:body-params request)
-        a (complex-number (:real-a params) (:imag-a params))
-        b (complex-number (:real-b params) (:imag-b params))
+        nested-params (get-nested-params params)
+        real-a (if (nil? (:real-a nested-params)) 0 (:real-a nested-params))
+        imag-a (if (nil? (:imag-a nested-params)) 0 (:imag-a nested-params))
+        real-b (if (nil? (:real-b nested-params)) 0 (:real-b nested-params))
+        imag-b (if (nil? (:imag-b nested-params)) 0 (:imag-b nested-params))
+        a (complex-number real-a imag-a)
+        b (complex-number real-b imag-b)
         result (subtract-complex a b)]
     (log :subtract a b result)
     {:status 200
@@ -80,8 +94,13 @@
 
 (defn multiply-handler [request]
   (let [params (:body-params request)
-        a (complex-number (:real-a params) (:imag-a params))
-        b (complex-number (:real-b params) (:imag-b params))
+        nested-params (get-nested-params params)
+        real-a (if (nil? (:real-a nested-params)) 0 (:real-a nested-params))
+        imag-a (if (nil? (:imag-a nested-params)) 0 (:imag-a nested-params))
+        real-b (if (nil? (:real-b nested-params)) 0 (:real-b nested-params))
+        imag-b (if (nil? (:imag-b nested-params)) 0 (:imag-b nested-params))
+        a (complex-number real-a imag-a)
+        b (complex-number real-b imag-b)
         result (multiply-complex a b)]
     (log :multiply a b result)
     {:status 200
@@ -90,8 +109,13 @@
 (defn divide-handler [request]
   (try
     (let [params (:body-params request)
-          a (complex-number (:real-a params) (:imag-a params))
-          b (complex-number (:real-b params) (:imag-b params))
+          nested-params (get-nested-params params)
+          real-a (if (nil? (:real-a nested-params)) 0 (:real-a nested-params))
+          imag-a (if (nil? (:imag-a nested-params)) 0 (:imag-a nested-params))
+          real-b (if (nil? (:real-b nested-params)) 0 (:real-b nested-params))
+          imag-b (if (nil? (:imag-b nested-params)) 0 (:imag-b nested-params))
+          a (complex-number real-a imag-a)
+          b (complex-number real-b imag-b)
           result (divide-complex a b)]
       (log :divide a b result)
       {:status 200
@@ -102,7 +126,10 @@
 
 (defn magnitude-handler [request]
   (let [params (:body-params request)
-        a (complex-number (:real params) (:imag params))
+        nested-params (get-nested-params params)
+        real (if (nil? (:real nested-params)) 0 (:real nested-params))
+        imag (if (nil? (:imag nested-params)) 0 (:imag nested-params))
+        a (complex-number real imag)
         result (magnitude-complex a)]
     (log-single :magnitude a result)
     {:status 200
@@ -110,7 +137,10 @@
 
 (defn conjugate-handler [request]
   (let [params (:body-params request)
-        a (complex-number (:real params) (:imag params))
+        nested-params (get-nested-params params)
+        real (if (nil? (:real nested-params)) 0 (:real nested-params))
+        imag (if (nil? (:imag nested-params)) 0 (:imag nested-params))
+        a (complex-number real imag)
         result (conjugate-complex a)]
     (log-single :conjugate a result)
     {:status 200
