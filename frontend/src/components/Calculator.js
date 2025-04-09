@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Calculator.css';
 import Display from './Display';
 import Keypad from './Keypad';
+import ConversionModal from './ConversionModal';
 
 const Calculator = () => {
   const [display, setDisplay] = useState('0');
@@ -161,16 +162,8 @@ const Calculator = () => {
         result = await performApiCalculation(op, inputValue, secondInput);
         break;
       case 'convert':
-        const fromUnit = prompt('Enter source unit (e.g., celsius, inches, kg):');
-        if (!fromUnit) return;
-        const toUnit = prompt('Enter target unit (e.g., fahrenheit, cm, lb):');
-        if (!toUnit) return;
-        const valueToConvert = inputValue;
-        result = await performApiCalculation('conversion', {
-          from: fromUnit,
-          to: toUnit,
-          value: valueToConvert
-        });
+        setShowConversionModal(true);
+        return; // Exit early to prevent display update
         break;
       default:
         return;
@@ -219,6 +212,9 @@ const Calculator = () => {
   // Advanced operations menu
   const [showAdvancedMenu, setShowAdvancedMenu] = useState(false);
   
+  // Conversion modal state
+  const [showConversionModal, setShowConversionModal] = useState(false);
+  
   const handleAdvancedOperation = (type) => {
     setShowAdvancedMenu(false);
     
@@ -242,11 +238,18 @@ const Calculator = () => {
         }
         break;
       case 'conversion':
-        handleSpecialOperation('convert');
+        setShowConversionModal(true);
         break;
       default:
         break;
     }
+  };
+
+  // Handle conversion result
+  const handleConversionResult = (result) => {
+    setDisplay(String(result));
+    setWaitingForOperand(true);
+    setShowConversionModal(false);
   };
 
   return (
@@ -278,6 +281,13 @@ const Calculator = () => {
         onEquals={handleEquals}
         onSpecialOperation={handleSpecialOperation}
         onMemoryOperation={handleMemoryOperation}
+      />
+
+      {/* Conversion Modal */}
+      <ConversionModal 
+        isOpen={showConversionModal}
+        onClose={() => setShowConversionModal(false)}
+        onConversionResult={handleConversionResult}
       />
     </div>
   );

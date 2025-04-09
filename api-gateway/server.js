@@ -96,11 +96,30 @@ app.post('/calculate', async (req, res) => {
         serviceUrl = SERVICES.factorial;
         endpoint = `/${operation}`;
         break;
-      case 'temperature':
-      case 'length':
-      case 'weight':
+      case 'conversion':
         serviceUrl = SERVICES.conversion;
-        endpoint = `/${operation}`;
+        // For universal conversion handling
+        if (params.from && params.to && params.value !== undefined) {
+          // Determine conversion type based on units
+          const tempUnits = ['celsius', 'fahrenheit', 'kelvin'];
+          const lengthUnits = ['meter', 'centimeter', 'millimeter', 'kilometer', 'inch', 'foot', 'yard', 'mile'];
+          const weightUnits = ['kilogram', 'gram', 'milligram', 'pound', 'ounce', 'ton'];
+          
+          const fromLower = params.from.toLowerCase();
+          const toLower = params.to.toLowerCase();
+          
+          if (tempUnits.includes(fromLower) && tempUnits.includes(toLower)) {
+            endpoint = '/temperature';
+          } else if (lengthUnits.includes(fromLower) && lengthUnits.includes(toLower)) {
+            endpoint = '/length';
+          } else if (weightUnits.includes(fromLower) && weightUnits.includes(toLower)) {
+            endpoint = '/weight';
+          } else {
+            return res.status(400).json({ error: `Unsupported conversion units: ${params.from} to ${params.to}` });
+          }
+        } else {
+          return res.status(400).json({ error: 'Missing conversion parameters. Required: from, to, value' });
+        }
         break;
       case 'matrix-add':
       case 'matrix-multiply':

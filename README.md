@@ -15,8 +15,8 @@ This project implements a scientific calculator with each operation handled by a
 - Logarithm: PHP
 - Trigonometry: Kotlin
 - Memory Operations: C#
-- Combinatorics/Factorial: Elixir - doesn't works
-- Unit Conversion: TypeScript  - frontend not connected
+- Combinatorics/Factorial: Elixir
+- Unit Conversion: TypeScript
 - Matrix Operations: Julia  - frontend not connected
 - Bitwise Operations: Swift - frontend not connected
 - Complex Numbers: Clojure - doesn't works

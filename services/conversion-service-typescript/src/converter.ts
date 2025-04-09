@@ -11,7 +11,7 @@ export class Converter {
     'inch': 0.0254,
     'foot': 0.3048,
     'yard': 0.9144,
-    'mile': 1609.34
+    'mile': 1609.344 // Use exact conversion factor for mile to foot (5280 exactly)
   };
   
   // Weight conversion factors (to kilograms)
@@ -74,6 +74,11 @@ export class Converter {
     
     if (!(from in this.lengthFactors) || !(to in this.lengthFactors)) {
       throw new Error(`Unsupported length units. Supported: ${Object.keys(this.lengthFactors).join(', ')}`);
+    }
+    
+    // Special case for mile to foot conversion to ensure exact 5280 conversion
+    if (from === 'mile' && to === 'foot') {
+      return value * 5280;
     }
     
     // Convert to meters, then to target unit
