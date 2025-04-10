@@ -15,6 +15,36 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'healthy' });
 });
 
+// Debugging endpoint to see environment variables and service URLs
+app.get('/debug', (req, res) => {
+  // Only enable in development or when explicitly allowed
+  if (process.env.ENABLE_DEBUG === 'true' || process.env.NODE_ENV === 'development') {
+    const debugInfo = {
+      environment: process.env.NODE_ENV || 'not set',
+      serviceUrls: getServices(),
+      environmentVariables: {
+        ADDITION_SERVICE_URL: process.env.ADDITION_SERVICE_URL || 'not set',
+        SUBTRACTION_SERVICE_URL: process.env.SUBTRACTION_SERVICE_URL || 'not set',
+        MULTIPLICATION_SERVICE_URL: process.env.MULTIPLICATION_SERVICE_URL || 'not set',
+        DIVISION_SERVICE_URL: process.env.DIVISION_SERVICE_URL || 'not set',
+        POWER_SERVICE_URL: process.env.POWER_SERVICE_URL || 'not set',
+        SQUARE_ROOT_SERVICE_URL: process.env.SQUARE_ROOT_SERVICE_URL || 'not set',
+        LOG_SERVICE_URL: process.env.LOG_SERVICE_URL || 'not set',
+        TRIG_SERVICE_URL: process.env.TRIG_SERVICE_URL || 'not set',
+        MEMORY_SERVICE_URL: process.env.MEMORY_SERVICE_URL || 'not set',
+        FACTORIAL_SERVICE_URL: process.env.FACTORIAL_SERVICE_URL || 'not set',
+        CONVERSION_SERVICE_URL: process.env.CONVERSION_SERVICE_URL || 'not set',
+        MATRIX_SERVICE_URL: process.env.MATRIX_SERVICE_URL || 'not set',
+        BITWISE_SERVICE_URL: process.env.BITWISE_SERVICE_URL || 'not set',
+        COMPLEX_SERVICE_URL: process.env.COMPLEX_SERVICE_URL || 'not set'
+      }
+    };
+    res.json(debugInfo);
+  } else {
+    res.status(403).json({ error: 'Debug endpoint disabled in production' });
+  }
+});
+
 // Calculate endpoint - routes to appropriate service based on operation
 app.post('/calculate', async (req, res) => {
   const { operation, ...params } = req.body;

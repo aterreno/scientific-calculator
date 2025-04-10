@@ -2,42 +2,79 @@ const axios = require('axios');
 
 // Helper function to get service URL from environment or default value
 function getServiceUrl(serviceName, defaultPort) {
-  const envVarName = `${serviceName.toUpperCase().replace(/-/g, '_')}_SERVICE_URL`;
-  return process.env[envVarName] || `http://${serviceName}:${defaultPort}`;
+  // Convert "service-name" to "SERVICE_NAME" (removing the "-service" suffix first)
+  const baseName = serviceName.replace(/-service$/, '');
+  const envVarName = `${baseName.toUpperCase().replace(/-/g, '_')}_SERVICE_URL`;
+  
+  const envUrl = process.env[envVarName];
+  const defaultUrl = `http://${serviceName}:${defaultPort}`;
+  
+  // Log the environment variable lookup for debugging
+  console.log(`Looking for service ${serviceName}:`);
+  console.log(`  - Environment variable: ${envVarName}`);
+  console.log(`  - Environment value: ${envUrl || 'not set'}`);
+  console.log(`  - Using URL: ${envUrl || defaultUrl}`);
+  
+  return envUrl || defaultUrl;
 }
 
-// Service URLs - will use environment variables if available, otherwise default to Docker Compose service names
-const SERVICES = {
-  addition: getServiceUrl('addition-service', 8001),
-  subtraction: getServiceUrl('subtraction-service', 8002),
-  multiplication: getServiceUrl('multiplication-service', 8003),
-  division: getServiceUrl('division-service', 8004),
-  power: getServiceUrl('power-service', 8005),
-  squareRoot: getServiceUrl('square-root-service', 8006),
-  logarithm: getServiceUrl('log-service', 8007),
-  trigonometry: getServiceUrl('trig-service', 8008),
-  memory: getServiceUrl('memory-service', 8009),
-  factorial: getServiceUrl('factorial-service', 8010),
-  conversion: getServiceUrl('conversion-service', 8012),
-  matrix: getServiceUrl('matrix-service', 8014),
-  bitwise: getServiceUrl('bitwise-service', 8016),
-  complex: getServiceUrl('complex-service', 8017)
+// Service configuration - maps service keys to their service names and ports
+const SERVICE_CONFIG = {
+  addition: { name: 'addition-service', port: 8001 },
+  subtraction: { name: 'subtraction-service', port: 8002 },
+  multiplication: { name: 'multiplication-service', port: 8003 },
+  division: { name: 'division-service', port: 8004 },
+  power: { name: 'power-service', port: 8005 },
+  squareRoot: { name: 'square-root-service', port: 8006 },
+  logarithm: { name: 'log-service', port: 8007 },
+  trigonometry: { name: 'trig-service', port: 8008 },
+  memory: { name: 'memory-service', port: 8009 },
+  factorial: { name: 'factorial-service', port: 8010 },
+  conversion: { name: 'conversion-service', port: 8012 },
+  matrix: { name: 'matrix-service', port: 8014 },
+  bitwise: { name: 'bitwise-service', port: 8016 },
+  complex: { name: 'complex-service', port: 8017 }
 };
 
-// For testing purposes - allows injection of custom services
-function setServices(services) {
-  Object.keys(services).forEach(key => {
-    SERVICES[key] = services[key];
+// Function to dynamically get all service URLs
+function getServiceUrls() {
+  const urls = {};
+  
+  // Get URL for each service using environment variables or defaults
+  Object.entries(SERVICE_CONFIG).forEach(([key, config]) => {
+    urls[key] = getServiceUrl(config.name, config.port);
   });
+  
+  return urls;
 }
 
-// For testing purposes - reset to defaults or get current services
+// Get service URLs - this will be dynamically evaluated each time it's called
 function getServices() {
-  return {...SERVICES};
+  return getServiceUrls();
+}
+
+// For testing purposes - allows injection of custom services
+// Now uses a module-level variable that can be overridden
+let _customServiceUrls = null;
+
+function setServices(services) {
+  _customServiceUrls = services;
+}
+
+// For testing purposes or to get current services
+// Returns customized services if set, otherwise dynamically gets the services
+function getServices() {
+  if (_customServiceUrls) {
+    return {..._customServiceUrls};
+  }
+  return getServiceUrls();
 }
 
 // Core function to route calculation requests
 async function routeCalculation(operation, params) {
+  // Get the latest service URLs (ensures environment variables are used)
+  const SERVICES = getServiceUrls();
+  
   let serviceUrl;
   let endpoint;
   

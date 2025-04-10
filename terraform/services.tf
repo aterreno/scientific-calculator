@@ -22,6 +22,8 @@ resource "aws_ecs_task_definition" "api_gateway" {
     }]
     environment = [
       { name = "PORT", value = tostring(var.container_port["api-gateway"]) },
+      { name = "NODE_ENV", value = "production" },
+      { name = "ENABLE_DEBUG", value = "true" },
       
       # Use service discovery endpoints for AWS deployment
       { name = "ADDITION_SERVICE_URL", value = "http://addition-service.calculator.local:${var.container_port["addition-service"]}" },
