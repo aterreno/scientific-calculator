@@ -10,3 +10,4 @@
 
 - Not vibing 100% - and using copilot 
 - https://nektosact.com/introduction.html is great
+- terraforming with claude is insane, half a day to setup the whole project, really easy to improve and troubleshooting

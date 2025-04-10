@@ -81,7 +81,8 @@ resource "aws_ecs_service" "api_gateway" {
   }
 
   depends_on = [
-    aws_lb_listener.api_gateway
+    aws_lb_listener.api_gateway_http,
+    aws_lb_listener.api_gateway_https
   ]
 
   tags = {
@@ -113,9 +114,14 @@ resource "aws_ecs_task_definition" "frontend" {
       hostPort      = var.container_port["frontend"]
     }]
     environment = [
-      { name = "REACT_APP_API_URL", value = "http://${aws_lb.calculator_lb.dns_name}:8000" },
+      # Temporarily use HTTP instead of HTTPS until certificate is validated
+      # { name = "REACT_APP_API_URL", value = "http://${aws_lb.calculator_lb.dns_name}:8000" },
+      # { name = "DEPLOYMENT_ENV", value = "aws" },
+      # { name = "API_GATEWAY_ENDPOINT", value = "http://${aws_lb.calculator_lb.dns_name}:8000/" }
+      # Uncomment when HTTPS is enabled
+      { name = "REACT_APP_API_URL", value = "https://calc.terreno.dev:8443" },
       { name = "DEPLOYMENT_ENV", value = "aws" },
-      { name = "API_GATEWAY_ENDPOINT", value = "http://${aws_lb.calculator_lb.dns_name}:8000/" }
+      { name = "API_GATEWAY_ENDPOINT", value = "https://calc.terreno.dev:8443/" }
     ]
     logConfiguration = {
       logDriver = "awslogs"
@@ -157,7 +163,8 @@ resource "aws_ecs_service" "frontend" {
   }
 
   depends_on = [
-    aws_lb_listener.frontend
+    aws_lb_listener.frontend_http,
+    aws_lb_listener.frontend_https
   ]
 
   tags = {

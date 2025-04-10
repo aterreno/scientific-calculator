@@ -5,12 +5,27 @@ output "load_balancer_dns" {
 
 output "api_gateway_url" {
   description = "URL for the API Gateway service"
-  value       = "http://${aws_lb.calculator_lb.dns_name}:8000"
+  value       = "https://calc.terreno.dev:8443"
 }
 
 output "frontend_url" {
   description = "URL for the frontend application"
+  value       = "https://calc.terreno.dev"
+}
+
+output "api_gateway_url_legacy" {
+  description = "Legacy HTTP URL for the API Gateway service"
+  value       = "http://${aws_lb.calculator_lb.dns_name}:8000"
+}
+
+output "frontend_url_legacy" {
+  description = "Legacy HTTP URL for the frontend application"
   value       = "http://${aws_lb.calculator_lb.dns_name}"
+}
+
+output "elb_domain" {
+  description = "ELB domain name for DNS configuration (CNAME target)"
+  value       = aws_lb.calculator_lb.dns_name
 }
 
 output "ecs_cluster_name" {
