@@ -1,21 +1,27 @@
 const axios = require('axios');
 
-// Service URLs
+// Helper function to get service URL from environment or default value
+function getServiceUrl(serviceName, defaultPort) {
+  const envVarName = `${serviceName.toUpperCase().replace(/-/g, '_')}_SERVICE_URL`;
+  return process.env[envVarName] || `http://${serviceName}:${defaultPort}`;
+}
+
+// Service URLs - will use environment variables if available, otherwise default to Docker Compose service names
 const SERVICES = {
-  addition: 'http://addition-service:8001',
-  subtraction: 'http://subtraction-service:8002',
-  multiplication: 'http://multiplication-service:8003',
-  division: 'http://division-service:8004',
-  power: 'http://power-service:8005',
-  squareRoot: 'http://square-root-service:8006',
-  logarithm: 'http://log-service:8007',
-  trigonometry: 'http://trig-service:8008',
-  memory: 'http://memory-service:8009',
-  factorial: 'http://factorial-service:8010',
-  conversion: 'http://conversion-service:8012',
-  matrix: 'http://matrix-service:8014',
-  bitwise: 'http://bitwise-service:8016',
-  complex: 'http://complex-service:8017'
+  addition: getServiceUrl('addition-service', 8001),
+  subtraction: getServiceUrl('subtraction-service', 8002),
+  multiplication: getServiceUrl('multiplication-service', 8003),
+  division: getServiceUrl('division-service', 8004),
+  power: getServiceUrl('power-service', 8005),
+  squareRoot: getServiceUrl('square-root-service', 8006),
+  logarithm: getServiceUrl('log-service', 8007),
+  trigonometry: getServiceUrl('trig-service', 8008),
+  memory: getServiceUrl('memory-service', 8009),
+  factorial: getServiceUrl('factorial-service', 8010),
+  conversion: getServiceUrl('conversion-service', 8012),
+  matrix: getServiceUrl('matrix-service', 8014),
+  bitwise: getServiceUrl('bitwise-service', 8016),
+  complex: getServiceUrl('complex-service', 8017)
 };
 
 // For testing purposes - allows injection of custom services

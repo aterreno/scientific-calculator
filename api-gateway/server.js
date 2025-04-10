@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { routeCalculation } = require('./routes');
+const { routeCalculation, getServices } = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -43,6 +43,8 @@ app.post('/calculate', async (req, res) => {
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`API Gateway running on port ${PORT}`);
+    console.log('Available services:');
+    console.log(JSON.stringify(getServices(), null, 2));  
   });
 }
 
