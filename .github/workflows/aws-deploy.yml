@@ -1,0 +1,108 @@
+name: Deploy to AWS
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+      image_tag:
+        description: 'Docker image tag to deploy'
+        required: true
+        default: 'latest'
+
+jobs:
+  build-and-push:
+    name: Build and Push Docker Images
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      # Build and push each service
+      - name: Build and push API Gateway
+        uses: docker/build-push-action@v5
+        with:
+          context: ./api-gateway
+          push: true
+          tags: aterreno/sci-calc-api-gateway:${{ github.sha }},aterreno/sci-calc-api-gateway:${{ inputs.image_tag }}
+      
+      - name: Build and push Frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: aterreno/sci-calc-frontend:${{ github.sha }},aterreno/sci-calc-frontend:${{ inputs.image_tag }}
+      
+      # Example for one microservice - repeat for all others
+      - name: Build and push Addition Service
+        uses: docker/build-push-action@v5
+        with:
+          context: ./services/addition-service-rust
+          push: true
+          tags: aterreno/sci-calc-addition-service:${{ github.sha }},aterreno/sci-calc-addition-service:${{ inputs.image_tag }}
+      
+  
+  terraform-deploy:
+    name: Deploy Infrastructure with Terraform
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.0
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      
+      - name: Terraform Init
+        working-directory: ./terraform
+        run: terraform init
+      
+      - name: Terraform Validate
+        working-directory: ./terraform
+        run: terraform validate
+      
+      - name: Terraform Plan
+        working-directory: ./terraform
+        run: |
+          terraform plan \
+            -var="environment=${{ inputs.environment }}" \
+            -var="image_tag=${{ github.sha }}" \
+            -out=tfplan
+      
+      - name: Terraform Apply
+        working-directory: ./terraform
+        run: terraform apply -auto-approve tfplan
+      
+      - name: Output Application URLs
+        working-directory: ./terraform
+        id: terraform-output
+        run: |
+          echo "Frontend URL: $(terraform output -raw frontend_url)" >> $GITHUB_STEP_SUMMARY
+          echo "API Gateway URL: $(terraform output -raw api_gateway_url)" >> $GITHUB_STEP_SUMMARY
