@@ -1,4 +1,4 @@
-FROM swift:5.7-jammy as build
+FROM swift:5.7-jammy AS build
 
 WORKDIR /app
 
