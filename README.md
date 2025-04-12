@@ -87,7 +87,7 @@ This project implements a scientific calculator with each operation handled by a
 - Combines responses
 
 ### Frontend
-- Port: 3000
+- Port: 3001
 - User interface for calculator
 - Sends requests to API Gateway
 
@@ -102,7 +102,7 @@ This project implements a scientific calculator with each operation handled by a
 docker-compose up --build
 
 # Access the calculator web interface
-open http://localhost:3000
+open http://localhost:3001
 ```
 
 ## API Endpoints

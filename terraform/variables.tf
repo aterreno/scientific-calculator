@@ -66,7 +66,7 @@ variable "container_port" {
   description = "Port mapping for the containers"
   type        = map(number)
   default = {
-    "frontend"             = 3000
+    "frontend"             = 3001
     "api-gateway"          = 8000
     "addition-service"     = 8001
     "subtraction-service"  = 8002

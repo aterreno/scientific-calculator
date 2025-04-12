@@ -17,7 +17,7 @@ COPY nginx.conf.aws.template /etc/nginx/templates/default.conf.template
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 
-EXPOSE 3000
+EXPOSE 3001
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]

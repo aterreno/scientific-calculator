@@ -179,7 +179,7 @@ resource "aws_lb_listener" "api_gateway_https" {
 # LB Target Group for Frontend
 resource "aws_lb_target_group" "frontend" {
   name        = "${var.project_name}-frontend-tg"
-  port        = 3000
+  port        = 3001
   protocol    = "HTTP"
   vpc_id      = module.vpc.vpc_id
   target_type = "ip"
@@ -348,7 +348,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
 
 # Create a secrets manager secret for Docker Hub credentials
 resource "aws_secretsmanager_secret" "dockerhub_credentials" {
-  name = "${var.project_name}/dockerhub-credentials"
+  name = "${var.project_name}/dockerhub-credentials-new"
   
   tags = {
     Project     = var.project_name
@@ -382,7 +382,7 @@ resource "aws_iam_policy" "secrets_access_policy" {
           "secretsmanager:GetSecretValue"
         ]
         Resource = [
-          aws_secretsmanager_secret.dockerhub_credentials.arn
+          "${aws_secretsmanager_secret.dockerhub_credentials.arn}*"  # Use wildcard to match any suffix
         ]
       }
     ]

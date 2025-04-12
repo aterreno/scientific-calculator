@@ -18,8 +18,12 @@ services:
       - factorial-service
       - conversion-service
       - matrix-service
-      # - bitwise-service
-      # - complex-service
+      - bitwise-service
+      - complex-service
+      - otel-collector
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+      - OTEL_SERVICE_NAME=api-gateway
     networks:
       - calc-network
 
@@ -155,11 +159,90 @@ services:
     build: ./frontend
     image: aterreno/sci-calc-frontend
     ports:
-      - "3000:3000"
+      - "3001:3001"
     depends_on:
       - api-gateway
     networks:
       - calc-network
+      
+  # Telemetry services    
+  otel-collector:
+    image: otel/opentelemetry-collector:latest
+    container_name: otel-collector
+    volumes:
+      - ./telemetry/otel-config.yaml:/etc/otel/config.yaml
+      - ./telemetry/logs:/var/logs 
+    command: ["--config", "/etc/otel/config.yaml"]
+    ports:
+      - "4317:4317"  # OTLP gRPC
+      - "4318:4318"  # OTLP HTTP
+    depends_on:
+      - jaeger
+      - prometheus
+      - loki
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    volumes:
+      - ./telemetry/promtail-config.yaml:/etc/promtail/promtail-config.yaml
+      - ./telemetry/logs:/var/logs  # ✅ Mount logs directory
+    command: -config.file=/etc/promtail/promtail-config.yaml
+    depends_on:
+      - loki
+
+
+  # Jaeger for tracing
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    ports:
+      - "16686:16686"  # UI
+      - "14268:14268"  # Collector
+      - "14250:14250"
+      - "6831:6831/udp"
+
+  # Prometheus for metrics
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./telemetry/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  # Loki for logs
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+
+  # Blackbox Exporter for uptime monitoring
+  blackbox-exporter:
+    image: prom/blackbox-exporter:latest
+    container_name: blackbox-exporter
+    ports:
+      - "9115:9115"
+    volumes:
+      - ./telemetry/blackbox.yml:/etc/blackbox_exporter/config.yml
+
+  # Grafana for visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    volumes:
+      - ./telemetry/grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
+      - ./telemetry/grafana/dashboards:/var/lib/grafana/dashboards  
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      # - GF_SERVER_HTTP_PORT=6000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
 
 networks:
   calc-network:

@@ -1,0 +1,128 @@
+{
+  "id": null,
+  "uid": "web-vitals-dashboard",
+  "title": "Web Vitals & Application Metrics",
+  "tags": [
+    "web vitals",
+    "performance",
+    "opentelemetry"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 18,
+  "version": 1,
+  "panels": [
+    {
+      "title": "Largest Contentful Paint (LCP)",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "web_vitals_lcp",
+          "legendFormat": "LCP (ms)"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 6
+      }
+    },
+    {
+      "title": "First Input Delay (FID)",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "web_vitals_fid",
+          "legendFormat": "FID (ms)"
+        }
+      ],
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 6
+      }
+    },
+    {
+      "title": "Cumulative Layout Shift (CLS)",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "web_vitals_cls",
+          "legendFormat": "CLS Score"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 6,
+        "w": 12,
+        "h": 6
+      }
+    },
+    {
+      "title": "Page Load Time",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "page_load_time_seconds",
+          "legendFormat": "Page Load (s)"
+        }
+      ],
+      "gridPos": {
+        "x": 12,
+        "y": 6,
+        "w": 12,
+        "h": 6
+      }
+    },
+    {
+      "title": "Backend Response Time",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "backend_response_time_seconds",
+          "legendFormat": "Response Time (s)"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 12,
+        "h": 6
+      }
+    },
+    {
+      "title": "Error Rate",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(http_requests_total{status=~\"5..\"}[5m])",
+          "legendFormat": "5xx Errors"
+        }
+      ],
+      "gridPos": {
+        "x": 12,
+        "y": 12,
+        "w": 12,
+        "h": 6
+      }
+    }
+  ]
+},
+"grafana": {
+  "provisioning": {
+    "dashboards": {
+      "apiVersion": 1,
+      "providers": [
+        {
+          "name": "default",
+          "folder": "Web Vitals",
+          "type": "file",
+          "options": {
+            "path": "/etc/grafana/provisioning/dashboards/web-vitals-dashboard.json"
+          }
+        }
+      ]
+    }
+  }
+}

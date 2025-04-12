@@ -114,14 +114,10 @@ resource "aws_ecs_task_definition" "frontend" {
       hostPort      = var.container_port["frontend"]
     }]
     environment = [
-      # Temporarily use HTTP instead of HTTPS until certificate is validated
-      # { name = "REACT_APP_API_URL", value = "http://${aws_lb.calculator_lb.dns_name}:8000" },
-      # { name = "DEPLOYMENT_ENV", value = "aws" },
-      # { name = "API_GATEWAY_ENDPOINT", value = "http://${aws_lb.calculator_lb.dns_name}:8000/" }
-      # Uncomment when HTTPS is enabled
-      { name = "REACT_APP_API_URL", value = "https://calc.terreno.dev:8443" },
+      # Use load balancer DNS name instead of custom domain until DNS is set up
+      { name = "REACT_APP_API_URL", value = "http://${aws_lb.calculator_lb.dns_name}:8000" },
       { name = "DEPLOYMENT_ENV", value = "aws" },
-      { name = "API_GATEWAY_ENDPOINT", value = "https://calc.terreno.dev:8443/" }
+      { name = "API_GATEWAY_ENDPOINT", value = "http://${aws_lb.calculator_lb.dns_name}:8000/" }
     ]
     logConfiguration = {
       logDriver = "awslogs"
