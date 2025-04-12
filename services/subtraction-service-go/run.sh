@@ -23,6 +23,7 @@ function run_app() {
   print_header "Running Subtraction Service"
   
   echo -e "${GREEN}Building application...${NC}"
+  go tidy
   go build -o subtraction-service
   
   echo -e "${GREEN}Starting server on port 8002...${NC}"
